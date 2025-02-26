@@ -1,0 +1,56 @@
+import requests
+from datetime import datetime
+import smtplib
+import time
+
+
+MY_LAT = 53.544388
+MY_LONG = -113.490929
+
+MY_EMAIL = 'maksympython@gmail.com'
+PASSWORD = 'asjy lboq gouk ysxx'
+
+
+def is_iss_overhead():
+    responce = requests.get('https://api.open-notify.org/iss-now.json')
+    responce.raise_for_status()
+    data = responce.json()
+
+    iss_latitude = float(data['iss_position']['latitude'])
+    iss_longitude = float(data['iss_position']['longitude'])
+
+    #Your position is within +5 or -5 degrees of the iss position
+    if MY_LAT-5 <= iss_latitude <=MY_LAT+5 and MY_LONG-5 <= iss_longitude <= MY_LONG+5 :
+        return True
+
+def is_night():
+    parameters = {
+        'lat': MY_LAT,
+        'lng': MY_LONG,
+        'formatted': 0,
+    }
+    responce = requests.get('https://api.sunrise-sunset.org/json', params= parameters)
+    responce.raise_for_status()
+    data = responce.json()
+    sunrise = int(data['results']['sunrise'].split('T')[1].split(':')[0])
+    sunset = int(data['results']['sunset'].split('T')[1].split(':')[0])
+
+    time_now = datetime.now().hour
+
+    if time_now >= sunset or time_now <=sunrise:
+        return True
+
+while True:
+    time.sleep(60)       #60c zatrimka, mojna zapustutu programu i vnochi maye pruitu povidomlennya
+    if is_iss_overhead() and is_night():
+        connection = smtplib.SMTP('smtp.gmail.com',port=587)
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=PASSWORD)
+        connection.sendmail(from_addr= MY_EMAIL ,
+                            to_addrs= 'titan_111@ukr.net',
+                            msg= f'Subject: Look Up \n\n Iss Station above you in the sky')
+
+
+
+
+
