@@ -5,8 +5,8 @@ from datetime import datetime
 import pandas
 import random
 
-MY_EMAIL = 'maksympython@gmail.com'
-PASSWORD = 'asjy lboq gouk ysxx'
+MY_EMAIL = 'your _email'
+PASSWORD = 'your_password'
 
 # 2. Check if today matches a birthday in the birthdays.csv
 
