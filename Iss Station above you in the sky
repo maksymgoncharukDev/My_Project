@@ -7,8 +7,8 @@ import time
 MY_LAT = 53.544388
 MY_LONG = -113.490929
 
-MY_EMAIL = 'maksympython@gmail.com'
-PASSWORD = 'asjy lboq gouk ysxx'
+MY_EMAIL = 'your _email'
+PASSWORD = 'your_password'
 
 
 def is_iss_overhead():
