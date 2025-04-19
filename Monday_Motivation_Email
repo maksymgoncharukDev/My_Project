@@ -2,8 +2,8 @@ import smtplib
 import datetime as dt
 import random
 
-MY_EMAIL = 'maksympython@gmail.com'
-PASSWORD = 'your_password
+MY_EMAIL = 'your_email'
+PASSWORD = 'your_password'
 
 def send_motivation():
     with  smtplib.SMTP('smtp.gmail.com',port=587) as connection:
